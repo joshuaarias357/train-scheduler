@@ -50,7 +50,18 @@ database.ref().on("child_added", function(childSnapshot){
 
     console.log(startTimeFormatted);
 
-    var nextTrain = moment(startTimeFormatted).add(tFrequency, "minutes");
+    var currentTime = moment();
+
+    var startTimeConverted = moment(startTimeFormatted, "HH:mm").subtract(1, "years");
+
+
+    var diffTime = moment().diff(moment(startTimeConverted), "minutes");
+
+    var tRemainder = diffTime % tFrequency;
+
+    var tMinutesTillTrain = tFrequency - tRemainder;
+
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
 
     var nextTrainFormatted = moment(nextTrain).format("hh:mm A");
 
