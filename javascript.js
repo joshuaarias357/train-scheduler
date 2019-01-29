@@ -50,19 +50,25 @@ database.ref().on("child_added", function(childSnapshot){
 
     console.log(startTimeFormatted);
 
+    //grabbing current time
     var currentTime = moment();
 
+    //grabbing first inputted time to get ready for calculations
     var startTimeConverted = moment(startTimeFormatted, "HH:mm").subtract(1, "years");
 
-
+    //finding the difference between the start time and the current time
     var diffTime = moment().diff(moment(startTimeConverted), "minutes");
 
+    //finding how much time is left between last train depending on current time
     var tRemainder = diffTime % tFrequency;
 
+    //finding how much time till next train
     var tMinutesTillTrain = tFrequency - tRemainder;
 
+    //adding the minutes to the current time to get the next arrival time
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
 
+    //prepping it to show on the screen
     var nextTrainFormatted = moment(nextTrain).format("hh:mm A");
 
     console.log(nextTrain);
